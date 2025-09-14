@@ -1,7 +1,9 @@
+%%writefile app.py
 # --- Importações Essenciais ---
 import streamlit as st
 import os
 import time
+import asyncio # <-- ADICIONADO PARA A CORREÇÃO
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
@@ -12,14 +14,20 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from typing import TypedDict, List
 from langgraph.graph import StateGraph, START, END
 
-# --- CORREÇÃO: Carregando a Chave de API (do ambiente de execução) ---
+# --- Carregando a Chave de API (do ambiente de execução) ---
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 
-# --- Função para Criar o Banco de Dados Vetorial (com cache) ---
+# --- Função para Criar o Banco de Dados Vetorial (com cache e correção) ---
 @st.cache_resource
 def criar_banco_de_dados():
     """Função para criar e carregar o banco de dados vetorial."""
     try:
+        # ===== CORREÇÃO PARA O ERRO 'EVENT LOOP' =====
+        # Garante que um "gerente de tarefas" (event loop) esteja ativo
+        # para as bibliotecas assíncronas do Google.
+        asyncio.set_event_loop(asyncio.new_event_loop())
+        # ===============================================
+
         path = "base_conhecimento"
         loader = DirectoryLoader(path, glob="**/*.txt", loader_cls=TextLoader, loader_kwargs={'autodetect_encoding': True})
         docs = loader.load()
@@ -35,10 +43,8 @@ def criar_banco_de_dados():
         st.error(f"Erro ao criar o banco de dados: {e}")
         return None
 
-# --- Carregando o Banco de Dados ---
+# --- O restante do código permanece o mesmo ---
 db = criar_banco_de_dados()
-
-# --- Criando o Agente Conversacional ---
 if db:
     llm_geracao = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=GOOGLE_API_KEY, temperature=0.7)
     prompt_rag = ChatPromptTemplate.from_messages([
@@ -71,8 +77,6 @@ if db:
     workflow.add_edge(START, "rag")
     workflow.add_edge("rag", END)
     chatbot_final = workflow.compile()
-
-# --- Interface Gráfica com Streamlit ---
 st.title("🌍 ClimaBot - Seu Assistente da Clima Ação")
 st.caption("Faça uma pergunta sobre mudanças climáticas ou sobre o nosso trabalho!")
 if "messages" not in st.session_state:
