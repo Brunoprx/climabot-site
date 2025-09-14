@@ -1,4 +1,4 @@
-%%writefile app.py
+
 # --- Importações Essenciais ---
 import streamlit as st
 import os
