@@ -21,6 +21,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <link rel="stylesheet" href="chatbot.css">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -1906,141 +1907,7 @@
       });
     });
   </script>
-
-  <style>
-  #climabot-bubble { /* ... estilos do botão ... */ }
-  #climabot-popup { /* ... estilos da janela ... */ }
-  /* Adicionar novos estilos para a área de chat */
-  #climabot-messages {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .chat-message {
-    padding: 8px 12px;
-    border-radius: 18px;
-    max-width: 80%;
-    line-height: 1.4;
-  }
-  .user-message {
-    background-color: #14b8a6;
-    color: white;
-    align-self: flex-end;
-    border-bottom-right-radius: 4px;
-  }
-  .assistant-message {
-    background-color: #f3f4f6;
-    color: #1f2937;
-    align-self: flex-start;
-    border-bottom-left-radius: 4px;
-  }
-  #climabot-input-area {
-    border-top: 1px solid #e5e7eb;
-    padding: 10px;
-    display: flex;
-  }
-  #climabot-input {
-    flex-grow: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 20px;
-    padding: 8px 15px;
-    outline: none;
-  }
-  #climabot-send-btn {
-    border: none;
-    background: #14b8a6;
-    color: white;
-    border-radius: 50%;
-    width: 38px;
-    height: 38px;
-    margin-left: 8px;
-    cursor: pointer;
-  }
-</style>
-
-<div id="climabot-bubble">
-  <img src="img/climabot-logo.png" alt="Abrir Chat" />
-</div>
-<div id="climabot-popup">
-  <div id="climabot-popup-header"><span>ClimaBot Assistente</span><span class="close-btn">&times;</span></div>
-  <div id="climabot-messages">
-    <div class="chat-message assistant-message">Olá! Como posso ajudar sobre a Clima Ação ou as mudanças climáticas?</div>
-  </div>
-  <div id="climabot-input-area">
-    <input type="text" id="climabot-input" placeholder="Escreva a sua dúvida...">
-    <button id="climabot-send-btn"><i class="fas fa-paper-plane"></i></button>
-  </div>
-</div>
-
-<script>
-  // Lógica para abrir/fechar o pop-up (sem alterações)
-  const bubble = document.getElementById('climabot-bubble');
-  const popup = document.getElementById('climabot-popup');
-  const closeBtn = document.querySelector('#climabot-popup .close-btn');
-  function togglePopup() { popup.classList.toggle('active'); }
-  bubble.addEventListener('click', togglePopup);
-  closeBtn.addEventListener('click', togglePopup);
-
-  // --- LÓGICA DO CHAT ---
-  const messagesContainer = document.getElementById('climabot-messages');
-  const input = document.getElementById('climabot-input');
-  const sendBtn = document.getElementById('climabot-send-btn');
-
-  // URL da nossa API na Netlify
-  const API_URL = '/.netlify/functions/api';
-
-  async function sendMessage() {
-    const pergunta = input.value.trim();
-    if (!pergunta) return;
-
-    // Adiciona a mensagem do utilizador à tela
-    addMessage(pergunta, 'user');
-    input.value = '';
-    
-    // Mostra um indicador de "a pensar..."
-    addMessage('...', 'assistant', true);
-
-    try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pergunta: pergunta })
-      });
-      const data = await response.json();
-      
-      // Remove o "a pensar..." e adiciona a resposta final
-      updateLastMessage(data.resposta || 'Desculpe, ocorreu um erro.');
-
-    } catch (error) {
-      updateLastMessage('Não consigo responder agora. Tente mais tarde.');
-    }
-  }
-
-  function addMessage(text, role, isLoading = false) {
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `chat-message ${role}-message`;
-    messageDiv.textContent = text;
-    if (isLoading) messageDiv.id = 'loading-indicator';
-    messagesContainer.appendChild(messageDiv);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight; // Rola para a nova mensagem
-  }
-
-  function updateLastMessage(text) {
-    const loadingIndicator = document.getElementById('loading-indicator');
-    if (loadingIndicator) {
-      loadingIndicator.textContent = text;
-      loadingIndicator.id = ''; // Remove o id para não ser encontrado novamente
-    }
-  }
-
-  sendBtn.addEventListener('click', sendMessage);
-  input.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') sendMessage();
-  });
-</script>
+<script src="chatbot.js"></script>
 </body>
 
 </html>
