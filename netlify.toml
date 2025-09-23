@@ -1,6 +1,10 @@
 [build]
-  command = "echo 'Nenhum comando de build necessário'"
+  command = "echo 'Build command'"
   publish = "."
 
 [functions]
   directory = "netlify"
+
+[functions."*"]
+  runtime = "python"
+  python_version = "3.11"
