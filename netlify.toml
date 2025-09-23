@@ -3,7 +3,7 @@
   publish = "."
 
 [functions]
-  directory = "netlify"
+  directory = "netlify/functions"
 
 [functions."*"]
   runtime = "python"
