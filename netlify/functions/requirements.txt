@@ -4,3 +4,5 @@ faiss-cpu
 fastapi
 uvicorn
 langchain-community
+tiktoken
+unstructured
