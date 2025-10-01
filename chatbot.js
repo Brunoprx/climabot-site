@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const sendBtn = document.getElementById('climabot-send-btn');
 
     // URL da nossa API na Netlify
-    const API_URL = 'https://climabot-api.onrender.com';
+    const API_URL = 'https://climabot-api.onrender.com/api';
 
     async function sendMessage() {
         if (!input || !messagesContainer) return;
