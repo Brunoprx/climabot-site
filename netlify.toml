@@ -2,9 +2,3 @@
   command = "echo 'Build command'"
   publish = "."
 
-[functions]
-  directory = "netlify/functions" # <-- CORREÇÃO AQUI
-
-[functions."*"]
-  runtime = "python"
-  python_version = "3.11"
