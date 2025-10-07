@@ -59,7 +59,7 @@ db = criar_banco_de_dados()
 
 # --- ALTERAÇÃO PRINCIPAL AQUI ---
 # Configura o modelo de linguagem com o nome correto
-llm_geracao = genai.GenerativeModel('gemini-1.0-pro')
+llm_geracao = genai.GenerativeModel('gemini-pro')
 
 # Cria o template do prompt
 prompt_template = """Você é o ClimaBot, um assistente virtual especialista em mudanças climáticas da ONG "Clima Ação". Sua personalidade é didática, confiável e inspiradora, como um educador apaixonado pelo planeta.
