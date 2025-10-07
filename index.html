@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Clima Ação | Junte-se à Luta Contra as Mudanças Climáticas</title>
+  <meta name="description" content="A Clima Ação é uma ONG dedicada a conscientizar e mobilizar a sociedade contra os impactos das mudanças climáticas. Conheça nossos projetos, veja nosso impacto e faça parte da mudança.">
+
+  <meta property="og:title" content="Clima Ação | O Futuro Depende das Ações de Hoje">
+  <meta property="og:description" content="Conheça nossos projetos de educação, reflorestamento e monitoramento climático. Veja como sua doação faz a diferença.">
+  <meta property="og:image" content="https://seusite.com/img/social-share.jpg">
+  <meta property="og:url" content="https://seusite.com">
+  <meta property="og:type" content="website">
+
+  <link rel="apple-touch-icon" href="/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16x16.png">
+  <link rel="manifest" href="/icon/site.webmanifest">
+  <link rel="shortcut icon" href="/icon/favicon.ico">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <link rel="stylesheet" href="chatbot.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="style.css">
+ 
+</head>
+
+<body>
+  <header class="absolute inset-x-0 top-0 z-50">
+    <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+      <div class="flex lg:flex-1">
+        <a href="#" class="-m-1.5 p-1.5">
+          <span class="sr-only">Clima Ação</span>
+          <div class="flex items-center space-x-3">
+            <img src="img/logo/logo.png" alt="Logo da ONG Clima Ação" class="h-14 w-14">
+            <h1 class="text-2xl font-bold text-white">Clima Ação</h1>
+          </div>
+        </a>
+      </div>
+      <div class="flex lg:hidden">
+        <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white" id="menu-btn">
+          <span class="sr-only">Abrir menu principal</span>
+          <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
+      <div class="hidden lg:flex lg:gap-x-12">
+        <a href="#inicio" class="text-sm/6 font-semibold text-white hover:text-gray-200 transition-colors">Início</a>
+        <a href="#sobre" class="text-sm/6 font-semibold text-white hover:text-gray-200 transition-colors">Sobre Nós</a>
+        <a href="#resultados" class="text-sm/6 font-semibold text-white hover:text-gray-200 transition-colors">Resultados</a>
+        <a href="#timeline" class="text-sm/6 font-semibold text-white hover:text-gray-200 transition-colors">Timeline do Clima</a>
+        <a href="#projetos" class="text-sm/6 font-semibold text-white hover:text-gray-200 transition-colors">Nossos Projetos</a>
+        <a href="#blog" class="text-sm/6 font-semibold text-white hover:text-gray-200 transition-colors">Blog</a>
+        <a href="#como-ajudar" class="text-sm/6 font-semibold text-white hover:text-gray-200 transition-colors">Como Ajudar</a>
+        <a href="#contato" class="text-sm/6 font-semibold text-white hover:text-gray-200 transition-colors">Contato</a>
+      </div>
+      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+        <a href="#como-ajudar" class="text-sm/6 font-semibold text-white bg-teal-500/80 px-4 py-2 rounded-full hover:bg-teal-500/100 transition-colors">Faça uma Doação <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </nav>
+    
+    <div class="lg:hidden hidden fixed inset-0 z-50 bg-black/50" id="mobile-menu">
+      <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-teal-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <div class="flex items-center justify-between">
+          <a href="#" class="-m-1.5 p-1.5">
+            <span class="sr-only">Clima Ação</span>
+            <div class="flex items-center space-x-3">
+              <img src="img/logo/logo.png" alt="Logo da ONG" class="h-10 w-10">
+              <span class="text-xl font-bold text-white">Clima Ação</span>
+            </div>
+          </a>
+          <button type="button" class="-m-2.5 rounded-md p-2.5 text-white" id="close-menu">
+            <span class="sr-only">Fechar menu</span>
+            <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="mt-6 flow-root">
+          <div class="-my-6 divide-y divide-white/20">
+            <div class="space-y-2 py-6">
+              <a href="#inicio" class="mobile-menu-link -mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-teal-800">Início</a>
+              <a href="#sobre" class="mobile-menu-link -mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-teal-800">Sobre Nós</a>
+              <a href="#resultados" class="mobile-menu-link -mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-teal-800">Resultados</a>
+              <a href="#timeline" class="mobile-menu-link -mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-teal-800">Timeline do Clima</a>
+              <a href="#projetos" class="mobile-menu-link -mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-teal-800">Nossos Projetos</a>
+              <a href="#blog" class="mobile-menu-link -mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-teal-800">Blog</a>
+              <a href="#como-ajudar" class="mobile-menu-link -mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-teal-800">Como Ajudar</a>
+              <a href="#contato" class="mobile-menu-link -mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-teal-800">Contato</a>
+            </div>
+            <div class="py-6">
+              <a href="#como-ajudar" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white bg-teal-600 hover:bg-teal-700">Faça uma Doação</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- incio -->
+    <section id="inicio" class="relative isolate h-screen flex items-center justify-center overflow-hidden">
+      <video autoplay muted loop playsinline class="hero-video-background poster="img/video-bg.jpg">
+        <source src="video/video.mp4" type="video/mp4">
+        Seu navegador não suporta a tag de vídeo.
+      </video>
+      <div class="absolute inset-0 bg-black/60 z-[-5]"></div>
+      <div class="mx-auto max-w-3xl text-center relative px-6">
+        <div class="hidden sm:mb-8 sm:flex sm:justify-center">
+          <div class="relative rounded-full px-3 py-1 text-sm/6 text-gray-300 ring-1 ring-white/20 hover:ring-white/40">
+            Junte-se à nossa causa pelo clima. <a href="#projetos" class="font-semibold text-teal-400"><span class="absolute inset-0" aria-hidden="true"></span>Conheça nossos projetos <span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </div>
+        <div class="text-white">
+          <h1 class="text-5xl font-black tracking-tight text-balance sm:text-7xl mb-8">
+            <span class="word inline-block">O</span>
+            <span class="word inline-block">futuro</span>
+            <span class="word inline-block">depende</span>
+            <span class="word inline-block">das</span>
+            <span class="word inline-block">ações</span>
+            <span class="word inline-block">de</span>
+            <span class="word inline-block">hoje.</span>
+          </h1>
+          <p class="mt-8 text-lg font-medium text-pretty text-gray-300 sm:text-xl/8 mb-10" data-aos="fade-up" data-aos-delay="1200">
+            Conscientizamos e mobilizamos a sociedade contra os impactos das mudanças climáticas, promovendo ações educativas e sustentáveis para um futuro mais limpo.
+          </p>
+          <div class="mt-10 flex items-center justify-center gap-x-6" data-aos="fade-up" data-aos-delay="1400">
+            <a href="#como-ajudar" class="rounded-full bg-teal-600 px-8 py-4 text-lg font-bold text-white shadow-lg uppercase tracking-wider transition-all duration-300 ease-in-out hover:bg-teal-700 hover:-translate-y-1 hover:scale-105 active:translate-y-0 active:scale-100 active:bg-teal-800">
+              Faça Parte da Ação
+            </a>
+            <a href="#sobre" class="text-lg font-semibold text-white hover:text-gray-200 transition-colors">Nossa Missão <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE NÓS -->
+    <section id="sobre" class="section py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center">
+          <h2 class="text-4xl font-bold text-center mb-12 text-teal-600 border-b-4 border-teal-600 pb-4 inline-block">
+            NOSSA CAUSA
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div data-aos="fade-right">
+            <img src="img/ong/nossacausa.jpg" alt="Voluntários da ONG em ação" class="rounded-xl shadow-lg w-full h-auto">
+          </div>
+          <div data-aos="fade-left">
+            <h3 class="text-3xl font-bold text-gray-800 mb-6">Nossa Luta Pelo Clima</h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Acreditamos que a mudança começa com informação e ação local. A Clima Ação nasceu da urgência de trazer o debate sobre as mudanças climáticas para a nossa comunidade, transformando preocupação em atitude.
+            </p>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              <strong>Missão:</strong> Conscientizar e mobilizar a sociedade contra os impactos das mudanças climáticas, promovendo ações educativas e sustentáveis.
+            </p>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              <strong>Visão:</strong> Ser referência local em educação climática e iniciativas práticas de redução de emissões, construindo uma comunidade resiliente e consciente.
+            </p>
+            <p class="text-gray-700 leading-relaxed">
+              <strong>Valores:</strong> Nossos pilares são a sustentabilidade, inovação, transparência e o engajamento comunitário.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE DAS MUDANÇAS CLIMÁTICAS -->
+    <section id="timeline" class="section py-16 bg-gradient-to-br from-gray-50 to-gray-100 timeline-horizontal-container">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-center mb-4 text-teal-600 border-b-4 border-teal-600 pb-4 inline-block">
+                TIMELINE DAS MUDANÇAS CLIMÁTICAS
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto mt-4">
+                Uma jornada visual através dos marcos mais importantes que moldaram nossa compreensão sobre o clima e nos trouxeram até aqui.
+            </p>
+            </div>
+
+            <div class="swiper swiper-container">
+                <div class="swiper-wrapper" id="timeline-swiper-wrapper">
+                    </div>
+                
+                <div class="swiper-pagination"></div>
+
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOSSOS PROJETOS E AÇÕES -->
+    <section id="projetos" class="section py-16 bg-gray-100">
+      <div class="container mx-auto px-4">
+        <div class="text-center">
+          <h2 class="text-4xl font-bold text-center mb-4 text-teal-600 border-b-4 border-teal-600 pb-4 inline-block">
+            PROJETOS E AÇÕES
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto mt-4">
+            Atuamos em frentes estratégicas para gerar impacto real e duradouro em nossa comunidade e no planeta.
+          </p>
+        </div>
+
+        <div class="bento-grid mt-16 max-w-4xl mx-auto">
+          
+          <div class="bento-item md:col-span-2" data-aos="fade-up">
+            <div>
+              <div class="icon"><i class="fas fa-chalkboard-teacher"></i></div>
+              <h3>Educação Climática</h3>
+              <p>Levamos conhecimento a escolas e empresas através de oficinas e palestras sobre aquecimento global, consumo consciente e o poder das energias limpas para transformar nossa realidade.</p>
+            </div>
+          </div>
+
+          <div class="bento-item" data-aos="fade-up" data-aos-delay="100">
+            <div>
+              <div class="icon"><i class="fas fa-leaf"></i></div>
+              <h3>Redução de Carbono</h3>
+              <p>Nossas campanhas incentivam práticas que reduzem a pegada de carbono, como caronas solidárias e o uso de transportes sustentáveis.</p>
+            </div>
+          </div>
+          
+          <div class="bento-item" data-aos="fade-up" data-aos-delay="200">
+            <div>
+              <div class="icon"><i class="fas fa-chart-area"></i></div>
+              <h3>Monitoramento do Clima</h3>
+              <p>Traduzimos dados complexos em relatórios acessíveis sobre a qualidade do ar, variações de temperatura e alertas ambientais.</p>
+            </div>
+          </div>
+
+          <div class="bento-item md:col-span-2" data-aos="fade-up" data-aos-delay="300">
+            <div>
+              <div class="icon"><i class="fas fa-bullhorn"></i></div>
+              <h3>Mobilização Online</h3>
+              <p>Usamos o poder das redes para unir vozes em petições digitais, desafios virais como o #30DiasPeloClima e campanhas de conscientização que alcançam milhares de pessoas.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTADOS CONCRETOS -->
+    <section id="resultados" class="section py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-center mb-4 text-teal-600 border-b-4 border-teal-600 pb-4 inline-block">
+            RESULTADOS CONCRETOS
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto mt-4">
+            Conheça o impacto real das nossas ações na comunidade e no meio ambiente.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          <div class="resultado-card" data-aos="fade-up">
+            <div class="flex items-center mb-4">
+              <i class="fas fa-school text-teal-600 text-2xl mr-3"></i>
+              <h3 class="text-xl font-bold text-gray-800">Projeto Escola Verde</h3>
+            </div>
+            <div class="space-y-2 text-gray-700">
+              <p><strong>15 escolas</strong> municipais participantes</p>
+              <p><strong>2.000 alunos</strong> diretamente impactados</p>
+              <p><strong>30% redução</strong> no consumo de energia</p>
+              <p><strong>50 professores</strong> capacitados</p>
+            </div>
+          </div>
+
+          <div class="resultado-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="flex items-center mb-4">
+              <i class="fas fa-car text-teal-600 text-2xl mr-3"></i>
+              <h3 class="text-xl font-bold text-gray-800">Mobilidade Sustentável</h3>
+            </div>
+            <div class="space-y-2 text-gray-700">
+              <p><strong>500 famílias</strong> aderiram às caronas solidárias</p>
+              <p><strong>25 toneladas</strong> de CO₂ evitadas</p>
+              <p><strong>12 rotas</strong> de carona implementadas</p>
+              <p><strong>R$ 45.000</strong> economizados em combustível</p>
+            </div>
+          </div>
+
+          <div class="resultado-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="flex items-center mb-4">
+              <i class="fas fa-seedling text-teal-600 text-2xl mr-3"></i>
+              <h3 class="text-xl font-bold text-gray-800">Reflorestamento Urbano</h3>
+            </div>
+            <div class="space-y-2 text-gray-700">
+              <p><strong>1.200 mudas</strong> plantadas</p>
+              <p><strong>8 praças</strong> revitalizadas</p>
+              <p><strong>15 toneladas</strong> de CO₂ compensadas/ano</p>
+              <p><strong>300 voluntários</strong> envolvidos</p>
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <!-- DEPOIMENTOS E CASOS DE SUCESSO -->
+    <section id="depoimentos" class="section py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-center mb-4 text-teal-600 border-b-4 border-teal-600 pb-4 inline-block">
+            HISTÓRIAS DE IMPACTO
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto mt-4">
+            Conheça as pessoas e comunidades que foram transformadas pelas nossas ações.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="testimonial-card" data-aos="fade-up">
+            <p class="text-gray-700 mb-4 mt-6">
+              Depois do workshop da Clima Ação, nossa escola reduziu 40% do desperdício de papel. Os alunos se tornaram verdadeiros guardiões do meio ambiente!
+            </p>
+            <div class="flex items-center">
+              <img src="img/depoimento/depoimento1.jpg" alt="Maria Santos" class="w-12 h-12 rounded-full mr-4">
+              <div>
+                <p class="font-semibold text-gray-800">Maria Santos</p>
+                <p class="text-sm text-gray-500">Diretora - Escola Municipal Vila Verde</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+            <p class="text-gray-700 mb-4 mt-6">
+              Participar do grupo de caronas não só reduziu meus gastos, mas me conectou com vizinhos que compartilham os mesmos valores ambientais.
+            </p>
+            <div class="flex items-center">
+              <img src="img/depoimento/depoimento2.jpg" alt="João Pedro" class="w-12 h-12 rounded-full mr-4">
+              <div>
+                <p class="font-semibold text-gray-800">João Pedro</p>
+                <p class="text-sm text-gray-500">Engenheiro e Voluntário</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+            <p class="text-gray-700 mb-4 mt-6">
+              Nossa empresa conseguiu reduzir 35% das emissões através das consultoria da Clima Ação. Hoje somos referência em sustentabilidade no setor.
+            </p>
+            <div class="flex items-center">
+              <img src="img/depoimento/depoimento3.jpg" alt="Ana Costa" class="w-12 h-12 rounded-full mr-4">
+              <div>
+                <p class="font-semibold text-gray-800">Ana Costa</p>
+                <p class="text-sm text-gray-500">CEO - TechVerde Solutions</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-12">
+          <button onclick="openTestimonialModal()" class="bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition-colors">
+            <i class="fas fa-plus mr-2"></i>Compartilhe Sua História
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- EQUIPE -->
+    <section id="equipe" class="section py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center">
+          <p class="text-teal-600 font-semibold">Nossa equipe</p>
+          <h2 class="text-4xl font-bold text-center mt-2 mb-4 text-gray-800">
+            Fundado por
+          </h2>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            Conheça as pessoas que dedicam suas vidas à nossa causa.
+          </p>
+        </div>
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-y-16 md:gap-x-8 text-center">
+          <div class="team-container">
+            <img class="team-image mx-auto" src="img/equipe/pessoa1.jpg" alt="Foto de Ana Silva">
+            <h3 class="mt-4 text-xl font-bold text-gray-900">Ana Silva</h3>
+            <p class="text-gray-500">Fundadora e Bióloga</p>
+            <div class="team-tooltip">
+                <h4 class="font-bold text-lg">Ana Silva</h4>
+                <p class="text-sm text-gray-400">Bióloga com mestrado em Ciências Climáticas.</p>
+                <p class="mt-2 text-sm">Apaixonada pela conservação de ecossistemas, Ana fundou a Clima Ação para transformar sua pesquisa em impacto real na comunidade.</p>
+            </div>
+          </div>
+          <div class="team-container">
+            <img class="team-image mx-auto" src="img/equipe/pessoa2.jpg" alt="Foto de Bruno Costa">
+            <h3 class="mt-4 text-xl font-bold text-gray-900">Bruno Costa</h3>
+            <p class="text-gray-500">Coordenador de Projetos</p>
+            <div class="team-tooltip">
+                <h4 class="font-bold text-lg">Bruno Costa</h4>
+                <p class="text-sm text-gray-400">Especialista em Gestão de Projetos Sociais.</p>
+                <p class="mt-2 text-sm">Com 10 anos de experiência no terceiro setor, Bruno é o responsável por planejar e executar nossas ações em campo, garantindo máxima eficiência e impacto.</p>
+            </div>
+          </div>
+          <div class="team-container">
+            <img class="team-image mx-auto" src="img/equipe/pessoa3.jpg" alt="Foto de Carla Lima">
+            <h3 class="mt-4 text-xl font-bold text-gray-900">Carla Lima</h3>
+            <p class="text-gray-500">Comunicação e Educação</p>
+            <div class="team-tooltip">
+              <h4 class="font-bold text-lg">Carla Lima</h4>
+              <p class="text-sm text-gray-400">Jornalista e Pedagoga.</p>
+              <p class="mt-2 text-sm">Carla é a voz da Clima Ação. Ela desenvolve nossas campanhas de conscientização e o conteúdo dos workshops educativos, traduzindo a ciência do clima para todos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- BLOG/NOTÍCIAS -->
+    <section id="blog" class="section py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-center mb-4 text-teal-600 border-b-4 border-teal-600 pb-4 inline-block">
+            ÚLTIMAS NOTÍCIAS
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto mt-4">
+            Mantenha-se informado sobre mudanças climáticas, nossas ações e dicas práticas para um futuro sustentável.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <article class="blog-card" data-aos="fade-up">
+            <img src="img/noticias/noticia1.webp" alt="COP30 em Brasil">
+            <div class="blog-card-content">
+              <div class="flex items-center text-sm text-gray-500 mb-2">
+                <i class="fas fa-calendar mr-2"></i>
+                <span>10 de Novembro, 2025</span>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 mb-3">
+                COP30 no Brasil: O Que Esperar?
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Descubra tudo sobre a COP 30, que será realizada em novembro de 2025 em Belém
+              </p>
+              <a href="https://www.alemdaenergia.engie.com.br/cop30-no-brasil-por-que-e-tao-importante-para-o-futuro-do-clima/?gad_source=1&gad_campaignid=22786113313&gbraid=0AAAAAoJ_EvkfYFDah9I2Y8YXZoFaQsbEP&gclid=Cj0KCQjw5c_FBhDJARIsAIcmHK9BFEwJ0nwMt5Nog3Zg92chZCEVS_WBhn0jY6T2-BdrRvvpD-LELk8aAvD9EALw_wcB" class="text-teal-600 font-semibold hover:text-teal-700">
+                Leia mais <i class="fas fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="blog-card" data-aos="fade-up" data-aos-delay="100">
+            <img src="img/noticias/noticia2.avif" alt="Plantio de mudas">
+            <div class="blog-card-content">
+              <div class="flex items-center text-sm text-gray-500 mb-2">
+                <i class="fas fa-calendar mr-2"></i>
+                <span>20 de Agosto, 2025</span>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 mb-3">
+                Novo estudo alerta que faltam apenas 3 anos para os piores impactos das mudanças climáticas no mundo
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Nossa última ação ambiental mobilizou 80 voluntários e transformou três praças da cidade...
+              </p>
+              <a href="https://g1.globo.com/meio-ambiente/noticia/2025/07/20/novo-estudo-alerta-que-faltam-apenas-3-anos-para-os-piores-impactos-das-mudancas-climaticas-no-mundo.ghtml" class="text-teal-600 font-semibold hover:text-teal-700">
+                Leia mais <i class="fas fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="blog-card" data-aos="fade-up" data-aos-delay="200">
+            <img src="img/noticias/noticia3.webp" alt="Gráfico de temperatura">
+            <div class="blog-card-content">
+              <div class="flex items-center text-sm text-gray-500 mb-2">
+                <i class="fas fa-calendar mr-2"></i>
+                <span>26 de Agosto, 2025</span>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 mb-3">
+                Com 1 milhão de hectares queimados, UE vive os incêndios florestais mais graves da história 
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Área equivalente a duas vezes o Distrito Federal foi consumida pelas chamas; Portugal e Espanha são os países mais afetados.
+              </p>
+              <a href="https://veja.abril.com.br/mundo/com-1-milhao-de-hectares-queimados-ue-vive-os-incendios-florestais-mais-graves-da-historia/" class="text-teal-600 font-semibold hover:text-teal-700">
+                Leia mais <i class="fas fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <div class="text-center mt-12">
+          <a href="https://www.cnnbrasil.com.br/tudo-sobre/mudancas-climaticas/" class="bg-teal-600 text-white px-8 py-3 rounded-lg hover:bg-teal-700 transition-colors">
+            Ver Todas as Notícias
+          </a>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <!-- NOSSOS NÚMEROS -->
+    <section class="section py-16 bg-teal-800 text-white">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-4">Nosso Impacto Climático</h2>
+        <p class="text-xl text-teal-100 text-center mb-12 max-w-2xl mx-auto">
+          Resultados reais que mostram o poder da ação coletiva.
+        </p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div class="group">
+            <div class="text-6xl font-black mb-3 animate-number" data-value="5000" data-suffix="+">0</div>
+            <p class="text-teal-100 font-medium mb-2">Pessoas Alcançadas</p>
+          </div>
+          <div class="group">
+            <div class="text-6xl font-black mb-3 animate-number" data-value="100" data-suffix="t">0</div>
+            <p class="text-teal-100 font-medium mb-2">CO₂ Evitado</p>
+          </div>
+          <div class="group">
+            <div class="text-6xl font-black mb-3 animate-number" data-value="50" data-suffix="+">0</div>
+            <p class="text-teal-100 font-medium mb-2">Oficinas Realizadas</p>
+          </div>
+          <div class="group">
+            <div class="text-6xl font-black mb-3 animate-number" data-value="200" data-suffix="+">0</div>
+            <p class="text-teal-100 font-medium mb-2">Voluntários Engajados</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMO AJUDAR -->
+    <section id="como-ajudar" class="section py-12 bg-gray-100">
+      <div class="container mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-12 text-teal-600 border-b-4 border-teal-600 pb-4 inline-block">
+          COMO VOCÊ PODE AJUDAR
+        </h2>
+        <div class="flex flex-col md:flex-row justify-center gap-8 px-4">
+          <div class="w-full md:w-1/3 shiny-card shadow-lg transition-all duration-300 ease-in-out">
+            <div class="shiny-card-content p-8 flex flex-col h-full">
+              <div class="text-center">
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Faça uma Doação</h3>
+                <p class="text-gray-500 text-sm mb-4">Sua contribuição direta financia nossas ações climáticas.</p>
+                <p class="text-3xl font-black text-gray-900 mb-2">A partir de R$ 10</p>
+                <p class="text-sm text-gray-500 mb-6">você já impulsiona a mudança.</p>
+              </div>
+              <ul class="space-y-4 mb-8 flex-grow">
+                <li class="flex items-start"><i class="fas fa-check-circle text-teal-500 mr-3 mt-1"></i><span class="text-gray-700">Apoie projetos de educação climática.</span></li>
+                <li class="flex items-start"><i class="fas fa-check-circle text-teal-500 mr-3 mt-1"></i><span class="text-gray-700">Ajude a manter nosso monitoramento local.</span></li>
+                <li class="flex items-start"><i class="fas fa-check-circle text-teal-500 mr-3 mt-1"></i><span class="text-gray-700">Receba relatórios transparentes de impacto.</span></li>
+              </ul>
+              <button onclick="openDonationModal()" class="w-full bg-gray-200 text-gray-700 font-bold py-3 rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-300 active:scale-95">
+                Doar Agora
+              </button>
+            </div>
+          </div>
+          <div class="w-full md:w-1/3 shiny-card shadow-xl transition-all duration-300 ease-in-out relative">
+              <div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 z-10">
+                <span class="bg-teal-600 text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider">Mais Impacto</span>
+              </div>
+            <div class="shiny-card-content p-8 flex flex-col h-full">
+              <div class="text-center">
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Seja Voluntário</h3>
+                <p class="text-gray-500 text-sm mb-4">Doe seu tempo e talento para a causa climática.</p>
+                <p class="text-3xl font-black text-gray-900 mb-2">Junte-se à Ação</p>
+                <p class="text-sm text-gray-500 mb-6">e faça a diferença com suas próprias mãos.</p>
+              </div>
+              <ul class="space-y-4 mb-8 flex-grow">
+                <li class="flex items-start"><i class="fas fa-check-circle text-teal-500 mr-3 mt-1"></i><span class="text-gray-700">Participe de mutirões de educação ambiental.</span></li>
+                <li class="flex items-start"><i class="fas fa-check-circle text-teal-500 mr-3 mt-1"></i><span class="text-gray-700">Ajude em campanhas de conscientização online.</span></li>
+                <li class="flex items-start"><i class="fas fa-check-circle text-teal-500 mr-3 mt-1"></i><span class="text-gray-700">Faça parte de uma comunidade engajada.</span></li>
+              </ul>
+              <button onclick="openVolunteerModal()" class="w-full bg-teal-600 text-white font-bold py-3 rounded-lg transition-all duration-300 ease-in-out hover:bg-teal-700 active:scale-95">
+                Quero ser voluntário
+              </button>
+            </div>
+          </div>
+          <div class="w-full md:w-1/3 shiny-card shadow-lg transition-all duration-300 ease-in-out">
+            <div class="shiny-card-content p-8 flex flex-col h-full">
+              <div class="text-center">
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Seja um Parceiro</h3>
+                <p class="text-gray-500 text-sm mb-4">Associe sua marca à sustentabilidade e à ação climática.</p>
+                <p class="text-3xl font-black text-gray-900 mb-2">Empresas Pelo Clima</p>
+                <p class="text-sm text-gray-500 mb-6">Mostre seu compromisso com o futuro do planeta.</p>
+              </div>
+              <ul class="space-y-4 mb-8 flex-grow">
+                <li class="flex items-start"><i class="fas fa-check-circle text-teal-500 mr-3 mt-1"></i><span class="text-gray-700">Desenvolva projetos de responsabilidade socioambiental.</span></li>
+                <li class="flex items-start"><i class="fas fa-check-circle text-teal-500 mr-3 mt-1"></i><span class="text-gray-700">Engaje seus colaboradores em ações de impacto.</span></li>
+                <li class="flex items-start"><i class="fas fa-check-circle text-teal-500 mr-3 mt-1"></i><span class="text-gray-700">Fortaleça a imagem da sua empresa.</span></li>
+              </ul>
+              <button onclick="openPartnershipModal()" class="w-full bg-gray-200 text-gray-700 font-bold py-3 rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-300 active:scale-95">
+                Entrar em contato
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMPACTO E MAPA -->
+    <section id="impacto-mapa" class="section py-16 bg-gray-800 text-white">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-center mb-4">
+        Saiba que sua doação está fazendo a diferença
+      </h2>
+      <p class="text-lg text-gray-300 max-w-3xl mx-auto mt-4">
+        A Clima Ação usa 100% da sua doação para financiar projetos de impacto ao redor do país e comprova cada projeto que você financia, incluindo coordenadas e relatórios.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mb-12">
+      <div class="bg-[#134A45] p-6 rounded-lg shadow-xl border border-[#1A5954]">
+        <p class="text-4xl font-bold text-teal-300 mb-2">5.000+</p>
+        <p class="text-gray-200 text-sm">Pessoas Atendidas</p>
+      </div>
+      <div class="bg-[#134A45] p-6 rounded-lg shadow-xl border border-[#1A5954]">
+        <p class="text-4xl font-bold text-teal-300 mb-2">1.200+</p>
+        <p class="text-gray-200 text-sm">Mudas Plantadas</p>
+      </div>
+      <div class="bg-[#134A45] p-6 rounded-lg shadow-xl border border-[#1A5954]">
+        <p class="text-4xl font-bold text-teal-300 mb-2">25</p>
+        <p class="text-gray-200 text-sm">Projetos Ativos</p>
+      </div>
+      <div class="bg-[#134A45] p-6 rounded-lg shadow-xl border border-[#1A5954]">
+        <p class="text-4xl font-bold text-teal-300 mb-2">4</p>
+        <p class="text-gray-200 text-sm">Estados</p>
+      </div>
+    </div>
+
+    <div id="map-filters" class="flex flex-wrap justify-center gap-2 mb-8 mt-6">
+        <button class="map-filter-btn active bg-white text-[#1A5954]"  data-category="all">
+            <i class="fas fa-globe-americas mr-2"></i>Todos
+        </button>
+        <button class="map-filter-btn bg-transparent border border-white text-white" data-category="reflorestamento">
+            <i class="fas fa-leaf mr-2"></i>Reflorestamento
+        </button>
+        <button class="map-filter-btn bg-transparent border border-white text-white" data-category="educacao">
+            <i class="fas fa-book-open mr-2"></i>Educação
+        </button>
+        <button class="map-filter-btn bg-transparent border border-white text-white" data-category="monitoramento">
+            <i class="fas fa-chart-line mr-2"></i>Monitoramento
+        </button>
+        <button class="map-filter-btn bg-transparent border border-white text-white" data-category="protecao">
+            <i class="fas fa-shield-alt mr-2"></i>Proteção
+        </button>
+        <button class="map-filter-btn bg-transparent border border-white text-white" data-category="energia">
+            <i class="fas fa-solar-panel mr-2"></i>Energia Limpa
+        </button>
+    </div>
+
+    <div id="map" class="rounded-lg shadow-2xl"></div>
+  </div>
+</section>
+    
+    <!-- CONTATO -->
+    <section id="contato" class="section py-16 bg-white">
+      <div class="container mx-auto px-4">
+          <div class="text-center">
+              <h2 class="text-4xl font-bold text-center mb-4 text-teal-600 border-b-4 border-teal-600 pb-4 inline-block">
+                  FALE CONOSCO
+              </h2>
+              <p class="text-xl text-gray-600 max-w-3xl mx-auto mt-4">
+                  Tem alguma dúvida, sugestão de parceria ou quer saber mais sobre como fazer a diferença pelo clima? Adoraríamos ouvir você!
+              </p>
+          </div>
+          <div class="max-w-2xl mx-auto bg-gray-50 p-8 rounded-xl shadow-lg border border-gray-200 mt-12">
+            <form id="contact-form" action="#" method="POST" class="space-y-8">
+              <div class="relative">
+                  <input type="text" name="full-name" id="full-name" required
+                         class="peer block w-full shadow-sm py-3 px-4 placeholder-transparent rounded-md border-gray-300 focus:ring-teal-500 focus:border-teal-500 transition-colors"
+                         placeholder="Nome Completo *">
+                  <label for="full-name"
+                         class="absolute left-4 -top-3.5 text-gray-500 text-sm transition-all 
+                                peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 
+                                peer-focus:-top-3.5 peer-focus:text-teal-600 peer-focus:text-sm">
+                      Nome Completo *
+                  </label>
+              </div>
+          
+              <div class="relative">
+                  <input id="email" name="email" type="email" required
+                         class="peer block w-full shadow-sm py-3 px-4 placeholder-transparent rounded-md border-gray-300 focus:ring-teal-500 focus:border-teal-500 transition-colors"
+                         placeholder="Email *">
+                  <label for="email"
+                         class="absolute left-4 -top-3.5 text-gray-500 text-sm transition-all 
+                                peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 
+                                peer-focus:-top-3.5 peer-focus:text-teal-600 peer-focus:text-sm">
+                      Email *
+                  </label>
+              </div>
+          
+              <div class="relative">
+                  <select id="subject" name="subject" required
+                          class="peer block w-full shadow-sm py-3 px-4 rounded-md border-gray-300 focus:ring-teal-500 focus:border-teal-500 transition-colors appearance-none">
+                      <option value="" disabled selected></option>
+                      <option value="doacao">Doação</option>
+                      <option value="voluntario">Quero ser voluntário</option>
+                      <option value="parceria">Parceria empresarial</option>
+                      <option value="imprensa">Imprensa</option>
+                      <option value="outro">Outro</option>
+                  </select>
+                  <label for="subject"
+                         class="absolute left-4 -top-3.5 text-gray-500 text-sm transition-all 
+                                peer-focus:-top-3.5 peer-focus:text-teal-600 peer-focus:text-sm
+                                peer-[&:not([value='']):not(:placeholder-shown)]:-top-3.5 
+                                peer-[&:not([value='']):not(:placeholder-shown)]:text-sm">
+                      Selecione o assunto *
+                  </label>
+                  <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                      <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M10 3a.75.75 0 01.53.22l3.5 3.5a.75.75 0 01-1.06 1.06L10 4.81 7.03 7.78a.75.75 0 01-1.06-1.06l3.5-3.5A.75.75 0 0110 3zm-3.53 9.28a.75.75 0 011.06 0L10 15.19l2.97-2.91a.75.75 0 111.06 1.06l-3.5 3.5a.75.75 0 01-1.06 0l-3.5-3.5a.75.75 0 010-1.06z" clip-rule="evenodd" />
+                      </svg>
+                  </div>
+              </div>
+          
+              <div class="relative">
+                  <textarea id="message" name="message" rows="4" required
+                            class="peer block w-full shadow-sm py-3 px-4 placeholder-transparent rounded-md border-gray-300 focus:ring-teal-500 focus:border-teal-500 transition-colors"
+                            placeholder="Sua mensagem *"></textarea>
+                  <label for="message"
+                         class="absolute left-4 -top-3.5 text-gray-500 text-sm transition-all 
+                                peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 
+                                peer-focus:-top-3.5 peer-focus:text-teal-600 peer-focus:text-sm">
+                      Sua mensagem *
+                  </label>
+              </div>
+          
+              <div>
+                  <button type="submit"
+                          class="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-transform duration-200 hover:scale-105 active:scale-100">
+                      <span id="submit-text">Enviar Mensagem</span>
+                      <i id="submit-icon" class="fas fa-paper-plane ml-2"></i>
+                      <i id="loading-icon" class="fas fa-spinner fa-spin ml-2 hidden"></i>
+                  </button>
+              </div>
+          </form>
+              <div class="mt-8 text-center">
+                <p class="text-gray-600 mb-4">Siga a Clima Ação nas redes sociais:</p>
+                <div class="flex justify-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-teal-600"><i class="fab fa-facebook-f text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-teal-600"><i class="fab fa-instagram text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-teal-600"><i class="fab fa-linkedin-in text-2xl"></i></a>
+                </div>
+              </div>
+          </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAIS PARA FORMULÁRIOS ESPECÍFICOS -->
+  
+  <!-- Modal de Doação -->
+  <div id="donationModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeDonationModal()">&times;</span>
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">Faça sua Doação</h2>
+      <form id="donation-form">
+        <div class="grid grid-cols-1 gap-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Valor da Doação</label>
+            <div class="grid grid-cols-3 gap-2 mb-4">
+              <button type="button" class="donation-amount bg-gray-100 hover:bg-teal-100 hover:border-teal-500 border border-gray-300 rounded-lg py-2 px-4 text-center transition-colors" data-amount="20">R$ 20</button>
+              <button type="button" class="donation-amount bg-gray-100 hover:bg-teal-100 hover:border-teal-500 border border-gray-300 rounded-lg py-2 px-4 text-center transition-colors" data-amount="50">R$ 50</button>
+              <button type="button" class="donation-amount bg-gray-100 hover:bg-teal-100 hover:border-teal-500 border border-gray-300 rounded-lg py-2 px-4 text-center transition-colors" data-amount="100">R$ 100</button>
+            </div>
+            <input type="number" name="custom-amount" placeholder="Ou digite outro valor" class="w-full border border-gray-300 rounded-lg py-2 px-4">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Tipo de Doação</label>
+            <select name="donation-type" class="w-full border border-gray-300 rounded-lg py-2 px-4">
+              <option value="unica">Doação única</option>
+              <option value="mensal">Doação mensal</option>
+            </select>
+          </div>
+          <div>
+            <input type="email" name="donor-email" placeholder="Seu email para recibo" required class="w-full border border-gray-300 rounded-lg py-2 px-4">
+          </div>
+          <button type="submit" class="w-full bg-teal-600 text-white font-bold py-3 rounded-lg hover:bg-teal-700 transition-colors">
+            Prosseguir com Doação
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de Voluntário -->
+  <div id="volunteerModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeVolunteerModal()">&times;</span>
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">Seja Voluntário</h2>
+      <form id="volunteer-form">
+        <div class="grid grid-cols-1 gap-y-4">
+          <input type="text" name="volunteer-name" placeholder="Nome completo" required class="w-full border border-gray-300 rounded-lg py-2 px-4">
+          <input type="email" name="volunteer-email" placeholder="Email" required class="w-full border border-gray-300 rounded-lg py-2 px-4">
+          <input type="tel" name="volunteer-phone" placeholder="Telefone" class="w-full border border-gray-300 rounded-lg py-2 px-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Áreas de interesse (marque quantas quiser):</label>
+            <div class="space-y-2">
+              <label class="flex items-center">
+                <input type="checkbox" name="interests" value="educacao" class="mr-2">
+                <span>Educação e Workshops</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" name="interests" value="plantio" class="mr-2">
+                <span>Plantio e Jardinagem</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" name="interests" value="comunicacao" class="mr-2">
+                <span>Comunicação e Redes Sociais</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" name="interests" value="eventos" class="mr-2">
+                <span>Organização de Eventos</span>
+              </label>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Disponibilidade:</label>
+            <select name="availability" class="w-full border border-gray-300 rounded-lg py-2 px-4">
+              <option value="fins-semana">Fins de semana</option>
+              <option value="noites">Noites durante a semana</option>
+              <option value="flexivel">Horário flexível</option>
+              <option value="pontual">Apenas eventos pontuais</option>
+            </select>
+          </div>
+          <textarea name="volunteer-message" placeholder="Conte um pouco sobre você e sua motivação (opcional)" class="w-full border border-gray-300 rounded-lg py-2 px-4" rows="3"></textarea>
+          <button type="submit" class="w-full bg-teal-600 text-white font-bold py-3 rounded-lg hover:bg-teal-700 transition-colors">
+            Enviar Candidatura
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de Parceria -->
+  <div id="partnershipModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closePartnershipModal()">&times;</span>
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">Parceria Empresarial</h2>
+      <form id="partnership-form">
+        <div class="grid grid-cols-1 gap-y-4">
+          <input type="text" name="company-name" placeholder="Nome da empresa" required class="w-full border border-gray-300 rounded-lg py-2 px-4">
+          <input type="text" name="contact-name" placeholder="Nome do contato" required class="w-full border border-gray-300 rounded-lg py-2 px-4">
+          <input type="email" name="contact-email" placeholder="Email corporativo" required class="w-full border border-gray-300 rounded-lg py-2 px-4">
+          <input type="tel" name="contact-phone" placeholder="Telefone" class="w-full border border-gray-300 rounded-lg py-2 px-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Tipo de parceria desejada:</label>
+            <select name="partnership-type" class="w-full border border-gray-300 rounded-lg py-2 px-4">
+              <option value="">Selecione uma opção</option>
+              <option value="patrocinio">Patrocínio de projetos</option>
+              <option value="voluntariado">Voluntariado corporativo</option>
+              <option value="consultoria">Consultoria em sustentabilidade</option>
+              <option value="evento">Organização de eventos</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+          <textarea name="partnership-message" placeholder="Descreva sua ideia de parceria e objetivos" required class="w-full border border-gray-300 rounded-lg py-2 px-4" rows="4"></textarea>
+          <button type="submit" class="w-full bg-teal-600 text-white font-bold py-3 rounded-lg hover:bg-teal-700 transition-colors">
+            Enviar Proposta
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de Depoimento -->
+  <div id="testimonialModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeTestimonialModal()">&times;</span>
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">Compartilhe Sua História</h2>
+      <form id="testimonial-form">
+        <div class="grid grid-cols-1 gap-y-4">
+          <input type="text" name="testimonial-name" placeholder="Seu nome" required class="w-full border border-gray-300 rounded-lg py-2 px-4">
+          <input type="text" name="testimonial-role" placeholder="Cargo/Profissão (opcional)" class="w-full border border-gray-300 rounded-lg py-2 px-4">
+          <input type="email" name="testimonial-email" placeholder="Email" required class="w-full border border-gray-300 rounded-lg py-2 px-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Como conheceu a Clima Ação?</label>
+            <select name="how-found" class="w-full border border-gray-300 rounded-lg py-2 px-4">
+              <option value="">Selecione uma opção</option>
+              <option value="workshop">Participei de um workshop</option>
+              <option value="voluntario">Sou voluntário</option>
+              <option value="parceiro">Empresa parceira</option>
+              <option value="redes">Redes sociais</option>
+              <option value="indicacao">Indicação</option>
+            </select>
+          </div>
+          <textarea name="testimonial-story" placeholder="Conte sua história: como as ações da Clima Ação impactaram sua vida, empresa ou comunidade?" required class="w-full border border-gray-300 rounded-lg py-2 px-4" rows="5"></textarea>
+          <div class="flex items-center">
+            <input type="checkbox" name="photo-permission" id="photo-permission" class="mr-2">
+            <label for="photo-permission" class="text-sm text-gray-700">Autorizo o uso da minha foto e depoimento em materiais da ONG</label>
+          </div>
+          <button type="submit" class="w-full bg-teal-600 text-white font-bold py-3 rounded-lg hover:bg-teal-700 transition-colors">
+            Enviar Depoimento
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- RODAPÉ -->
+  <footer class="bg-teal-900 text-white">
+    <div class="container mx-auto px-4 py-8">
+      <div class="border-t border-white/20 mt-6 pt-6 flex flex-col md:flex-row justify-between items-center text-center gap-4">
+        <div class="logo flex items-center space-x-3">
+          <img src="img/logo/logo.png" alt="Logo da ONG Clima Ação" class="h-12 w-12">
+          <span class="text-2xl font-bold">Clima Ação</span>
+        </div>
+        <nav class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            <a href="#inicio" class="text-gray-200 hover:text-white transition-colors">Início</a>
+            <a href="#sobre" class="text-gray-200 hover:text-white transition-colors">Sobre Nós</a>
+            <a href="#resultados" class="text-gray-200 hover:text-white transition-colors">Resultados</a>
+            <a href="#timeline" class="text-gray-200 hover:text-white transition-colors">Timeline</a>
+            <a href="#projetos" class="text-gray-200 hover:text-white transition-colors">Projetos</a>
+            <a href="#blog" class="text-gray-200 hover:text-white transition-colors">Blog</a>
+            <a href="#como-ajudar" class="text-gray-200 hover:text-white transition-colors">Apoie</a>
+            <a href="#contato" class="text-gray-200 hover:text-white transition-colors">Contato</a>
+        </nav>
+        <div class="text-gray-200">
+          <p>&copy; 2025 Clima Ação. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/main.js"></script>
+  
+  <div id="climabot-bubble">
+  <img src="img/logo/climabot-logo.png" alt="Abrir Chat" />
+</div>
+
+<div id="climabot-popup">
+  <div id="climabot-popup-header">
+    <span>ClimaBot Assistente</span>
+    <span class="close-btn">&times;</span>
+  </div>
+  <div id="climabot-messages">
+    <div class="chat-message assistant-message">Olá! Como posso ajudar sobre a Clima Ação ou as mudanças climáticas?</div>
+  </div>
+  <div id="climabot-input-area">
+    <input type="text" id="climabot-input" placeholder="Escreva a sua dúvida...">
+    <button id="climabot-send-btn"><i class="fas fa-paper-plane"></i></button>
+  </div>
+</div>
+<script src="chatbot.js"></script>
+</body>
+
+</html>

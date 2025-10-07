@@ -1,0 +1,649 @@
+/* ==========================================================================
+   ARQUIVO DE ESTILOS GLOBAIS - CLIMA AÇÃO
+   ==========================================================================
+   
+   ÍNDICE DE CONTEÚDO:
+   1. ESTILOS GLOBAIS E UTILITÁRIOS
+   2. CABEÇALHO (HEADER) E NAVEGAÇÃO
+   3. ESTILOS DAS SEÇÕES PRINCIPAIS
+      - Seção: Sobre Nós (#sobre)
+      - Seção: Projetos e Ações (#projetos)
+      - Seção: Depoimentos (#depoimentos)
+   4. COMPONENTES REUTILIZÁVEIS
+      - Componente: Shiny Card (Efeito de Brilho)
+      - Componente: Team Tooltip (Dica de Equipe)
+      - Componente: Bento Grid (Grade de Projetos)
+      - Componente: Timeline Horizontal (Swiper)
+      - Componente: Cards (Timeline, Depoimentos, Resultados, Blog)
+      - Componente: Modais (Janelas Pop-up)
+   5. MAPA INTERATIVO
+   6. ANIMAÇÕES (KEYFRAMES)
+
+========================================================================== */
+
+/* ==========================================================================
+   1. ESTILOS GLOBAIS E UTILITÁRIOS
+   ========================================================================== */
+
+/* Estilo para o vídeo de fundo da seção de início */
+.hero-video-background {
+    position: absolute;       /* Posição absoluta em relação à tela */
+    top: 50%;                 /* Centraliza verticalmente */
+    left: 50%;                /* Centraliza horizontalmente */
+    width: 100vw;             /* Largura total da tela */
+    height: 100vh;            /* Altura total da tela */
+    transform: translate(-50%, -50%); /* Ajuste fino para centralização perfeita */
+    object-fit: cover;        /* Garante que o vídeo cubra toda a área sem distorcer */
+    z-index: -10;             /* Envia o vídeo para trás de todo o conteúdo */
+  }
+  
+  /* Animação de entrada das palavras no título principal */
+  .word {
+      opacity: 0;                 /* Começa invisível */
+      transform: translateY(20px);/* Começa um pouco para baixo */
+  }
+  
+  /* Utilitário para esconder o ícone de carregamento do formulário */
+  #loading-icon.hidden { 
+      display: none; 
+  }
+  
+  
+  /* ==========================================================================
+     2. CABEÇALHO (HEADER) E NAVEGAÇÃO
+     ========================================================================== */
+  
+  /* Estilos de transição para o menu mobile */
+  #mobile-menu {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  #mobile-menu.hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  
+  #mobile-menu:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Efeito de escala no botão de menu "hambúrguer" */
+  #menu-btn {
+    transition: all 0.3s ease;
+  }
+  
+  #menu-btn:hover {
+    transform: scale(1.1);
+  }
+  
+  
+  /* ==========================================================================
+     3. ESTILOS DAS SEÇÕES PRINCIPAIS
+     ========================================================================== */
+  
+  /* Seção: Sobre Nós (#sobre) */
+  section#sobre img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Ajuste da imagem da seção "Sobre" para telas maiores */
+  @media (min-width: 768px) {
+      section#sobre img {
+          max-width: 500px;
+          width: 100%;
+          max-height: 450px;
+          object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
+      }
+  }
+  
+  /* Seção: Projetos e Ações (#projetos) */
+  #projetos {
+      position: relative; /* Necessário para o pseudo-elemento ::before funcionar */
+      background-image: url('../img/projetos-bg.jpg'); /* Caminho relativo para a imagem */
+      background-size: cover;
+      background-position: center center;
+      background-attachment: scroll; /* A imagem rola com a página */
+      z-index: 1;
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+  }
+  
+  /* Camada de sobreposição (overlay) com gradiente para a seção de projetos */
+  #projetos::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      /* Gradiente vertical para escurecer o topo e a base, melhorando a legibilidade do texto */
+      background: linear-gradient( to bottom, rgba(13, 74, 69, 0.95) 0%, rgba(13, 74, 69, 0.50) 40%, rgba(13, 74, 69, 0.50) 60%, rgba(13, 74, 69, 0.95) 100% );
+      z-index: -1; /* Posiciona o overlay atrás do conteúdo da seção */
+  }
+  
+  /* Estilo para os textos de título e parágrafo na seção de projetos */
+  #projetos .text-center > h2,
+  #projetos .text-center > p {
+      color: white;
+      text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.7); /* Sombra para destacar o texto do fundo */
+  }
+  
+  #projetos .text-center > h2 {
+      border-bottom-color: rgba(255, 255, 255, 0.8);
+  }
+  
+  
+  /* Seção: Depoimentos (#depoimentos) */
+  #depoimentos {
+      position: relative;
+      background-image: url('../img/onda-bg.png');
+      background-repeat: repeat;
+      background-size: 400px;
+      background-attachment: fixed; /* Efeito parallax: a imagem de fundo fica fixa */
+      z-index: 1;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+  }
+  
+  /* Overlay de cor sólida para a seção de depoimentos */
+  #depoimentos::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(13, 110, 99, 0.9);
+      z-index: -1;
+  }
+  
+  /* Estilo para os textos de título e parágrafo na seção de depoimentos */
+  #depoimentos .section-title,
+  #depoimentos .text-center > p {
+      color: white;
+      text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+  }
+  
+  #depoimentos .section-title {
+      border-bottom-color: rgba(255, 255, 255, 0.8);
+  }
+  
+  
+  /* ==========================================================================
+     4. COMPONENTES REUTILIZÁVEIS
+     ========================================================================== */
+  
+  /* Componente: Shiny Card (Efeito de Brilho na borda ao passar o mouse) */
+  @property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+  
+  .shiny-card {
+    position: relative;
+    /* Gradiente cônico que será animado para criar o efeito de brilho */
+    background: conic-gradient(from var(--angle), #67e8f9, #22d3ee, #0891b2, #22d3ee, #67e8f9);
+    animation: rotate 4s linear infinite; /* Aplica a animação 'rotate' */
+    padding: 3px;
+    border-radius: 0.8rem;
+  }
+  
+  /* Remove o efeito de brilho quando o mouse não está sobre o card */
+  .shiny-card:not(:hover) {
+      background: transparent;
+      border: 1px solid #e5e7eb;
+      padding: 2px;
+      animation: none;
+  }
+  
+  /* Conteúdo interno do card brilhante, que mascara o gradiente da borda */
+  .shiny-card-content {
+    background: white;
+    border-radius: 0.6rem;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Componente: Team Tooltip (Caixa de informação que aparece ao passar o mouse sobre a foto da equipe) */
+  .team-container {
+    position: relative;
+  }
+  
+  .team-tooltip {
+    position: absolute;
+    bottom: 115%; /* Posiciona acima da imagem */
+    left: 50%;
+    background-color: #1f2937;
+    color: #f3f4f6;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    width: 280px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    text-align: left;
+    opacity: 0; /* Começa invisível */
+    visibility: hidden; /* Começa escondido */
+    transform: translateX(-50%) translateY(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 50;
+  }
+  
+  /* Seta na base do tooltip */
+  .team-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #1f2937 transparent transparent transparent;
+  }
+  
+  /* Mostra o tooltip ao passar o mouse no container */
+  .team-container:hover .team-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  
+  .team-image {
+    border-radius: 9999px; /* Círculo perfeito */
+    width: 128px;
+    height: 128px;
+    object-fit: cover;
+    border: 4px solid #14b8a6;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  .team-container:hover .team-image {
+    transform: scale(1.1); /* Efeito de zoom na imagem */
+  }
+  
+  /* Componente: Bento Grid (Grade estilo "caixas" para a seção de projetos) */
+  .bento-grid {
+      display: grid;
+      gap: 2rem;
+  }
+  
+  /* Em telas médias ou maiores, a grade terá 2 colunas */
+  @media (min-width: 768px) {
+      .bento-grid {
+          grid-template-columns: repeat(2, 1fr);
+      }
+  }
+  
+  .bento-item {
+      background-color: white;
+      border-radius: 1.25rem;
+      border: 1px solid #e5e7eb;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .bento-item:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 10px 15px -3px rgba(32, 162, 142, 0.1), 0 4px 6px -2px rgba(32, 162, 142, 0.05);
+      border-color: #14b8a6;
+  }
+  
+  .bento-item .icon { margin-bottom: 1rem; color: #14b8a6; font-size: 2rem; }
+  .bento-item h3 { font-size: 1.5rem; font-weight: bold; color: #1f2937; margin-bottom: 0.75rem; }
+  .bento-item p { color: #4b5563; line-height: 1.6; }
+  
+  /* Estilo específico para os cards da Bento Grid na seção #projetos (efeito "vidro fosco") */
+  #projetos .bento-item {
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px); /* Efeito de desfoque no fundo */
+      border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+  
+  #projetos .bento-item h3, 
+  #projetos .bento-item p,
+  #projetos .bento-item .icon {
+      color: #1f2937;
+      text-shadow: none;
+  }
+  
+  #projetos .bento-item .icon {
+      color: #14b8a6;
+  }
+  
+  /* Componente: Timeline Horizontal Interativa (SWIPER) */
+  .timeline-horizontal-container {
+      padding: 4rem 0;
+      overflow: hidden;
+  }
+  
+  .swiper-container {
+      width: 100%;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      position: relative;
+      /* Linha cinza que atravessa o centro da timeline */
+      background: linear-gradient(to right, #e5e7eb 0%, #e5e7eb 100%);
+      background-size: 100% 2px;
+      background-position: center 25px;
+      background-repeat: no-repeat;
+  }
+  
+  .swiper-slide {
+      width: 300px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+  }
+  
+  .timeline-slide-year {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: bold;
+      color: #6b7280;
+      background-color: #f3f4f6;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      z-index: 10;
+      border: 2px solid #e5e7eb;
+      white-space: nowrap;
+  }
+  
+  /* Estilo de destaque para o card "AGORA" */
+  .swiper-slide.special .timeline-slide-year {
+      background-color: #f59e0b;
+      color: white;
+      border-color: #f59e0b;
+      animation: pulse 2s infinite;
+  }
+  
+  /* Marcador de bolinha na linha do tempo */
+  .swiper-slide::before {
+      content: '';
+      position: absolute;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 16px;
+      background-color: white;
+      border: 4px solid #14b8a6;
+      border-radius: 50%;
+      z-index: 15;
+  }
+  
+  /* Estilo do marcador para o card "AGORA" */
+  .swiper-slide.special::before {
+      border-color: #f59e0b;
+      animation: pulse-marker 2s infinite;
+  }
+  
+  /* Botões de navegação (setas) do Swiper */
+  .swiper-button-prev,
+  .swiper-button-next {
+      color: #14b8a6;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease;
+  }
+  
+  .swiper-button-prev:hover,
+  .swiper-button-next:hover {
+      background-color: rgba(255, 255, 255, 1);
+  }
+  
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+      font-size: 1.2rem;
+  }
+  
+  /* Paginação (bolinhas) do Swiper */
+  .swiper-pagination-bullet {
+      background-color: #9ca3af;
+      opacity: 1;
+      transition: background-color 0.3s ease;
+  }
+  
+  .swiper-pagination-bullet-active {
+      background-color: #14b8a6;
+  }
+  
+  /* Ajustes responsivos para a Timeline */
+  @media (max-width: 768px) {
+      .swiper-slide { width: 280px; }
+      .swiper-button-prev, .swiper-button-next { width: 30px; height: 30px; }
+      .swiper-button-prev { left: 5px; }
+      .swiper-button-next { right: 5px; }
+      .swiper-container { padding-top: 30px; background-position: center 15px; }
+      .timeline-slide-year { top: 0; font-size: 0.75rem; padding: 0.15rem 0.5rem; border-width: 1px; }
+      .swiper-slide::before { top: 15px; width: 12px; height: 12px; border-width: 3px; }
+      @keyframes pulse-marker {
+          70% { transform: translateX(-50%) scale(1.1); box-shadow: 0 0 0 8px rgba(20, 184, 166, 0); }
+      }
+  }
+  
+  
+  /* Componente: Cards da Timeline */
+  .timeline-card { background: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); border: 1px solid #e5e7eb; padding: 1.5rem; text-align: center; height: 100%; display: flex; flex-direction: column; transition: all 0.3s ease; }
+  .timeline-card:hover { transform: translateY(-8px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
+  .timeline-card-image { width: 100%; height: 180px; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem; filter: grayscale(0.2); transition: filter 0.3s ease; }
+  .timeline-card:hover .timeline-card-image { filter: grayscale(0); }
+  .timeline-card-title { font-size: 1.25rem; font-weight: bold; color: #1f2937; margin-bottom: 0.5rem; }
+  .timeline-card-description { font-size: 0.95rem; color: #4b5563; line-height: 1.5; flex-grow: 1; }
+  .swiper-slide.special .timeline-card { border-color: #f59e0b; }
+  
+  /* Componente: Cards de Depoimento */
+  .testimonial-card { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; position: relative; }
+  .testimonial-card::before { content: '"'; font-size: 4rem; color: #14b8a6; position: absolute; top: -10px; left: 20px; font-family: serif; }
+  .testimonial-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+  .testimonial-card p { color: #4b5563; text-shadow: none; }
+  
+  /* Componentes: Cards de Resultados, Blog, Parceiros, etc. */
+  .resultado-card { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; border-left: 4px solid #14b8a6; }
+  .resultado-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+  .chart-bar { background: linear-gradient(90deg, #14b8a6, #0891b2); height: 30px; border-radius: 15px; margin: 0.5rem 0; display: flex; align-items: center; padding: 0 1rem; color: white; font-weight: bold; transition: all 0.3s ease; }
+  .chart-bar:hover { transform: scaleX(1.02); }
+  .partner-logo { height: 60px; width: auto; filter: grayscale(1); transition: all 0.3s ease; }
+  .partner-logo:hover { filter: grayscale(0); transform: scale(1.1); }
+  .blog-card { background: white; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; }
+  .blog-card:hover { transform: translateY(-8px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+  .blog-card img { width: 100%; height: 200px; object-fit: cover; }
+  .blog-card-content { padding: 1.5rem; }
+  
+  /* Componente: Modais (Janelas pop-up para formulários) */
+  .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
+  .modal-content { background-color: white; margin: 15% auto; padding: 20px; border-radius: 10px; width: 80%; max-width: 500px; position: relative; }
+  .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; position: absolute; right: 15px; top: 10px; cursor: pointer; }
+  .close:hover, .close:focus { color: black; }
+  
+  
+  /* ==========================================================================
+     5. MAPA INTERATIVO
+     ========================================================================== */
+  #impacto-mapa {
+      background-color: #1A5954;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+  }
+  
+  #impacto-mapa h2 {
+      color: #ffffff;
+      font-size: 2.8rem;
+  }
+  
+  #impacto-mapa p {
+      color: #cbd5e0;
+      line-height: 1.7;
+  }
+  
+  #map {
+      width: 100%;
+      height: 550px;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      background-color: #1A5954; /* Cor de fundo enquanto o mapa carrega */
+      border: 1px solid #134A45;
+  }
+  
+  /* Estilos para as caixas de pop-up que aparecem ao clicar nos marcadores do mapa */
+  .leaflet-popup-content-wrapper {
+      background-color: #2A7E78;
+      color: #e2e8f0;
+      border-radius: 8px;
+      border: 1px solid #134A45;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+  }
+  .leaflet-popup-content { font-family: 'Roboto', sans-serif; margin: 1rem; }
+  .leaflet-popup-content h3 { font-weight: bold; color: #FFFFFF; margin: 0 0 0.5rem 0; font-size: 1.1rem; }
+  .leaflet-popup-content p { margin: 0; font-size: 0.9rem; }
+  .leaflet-popup-tip { background-color: #2A7E78; }
+  .leaflet-popup-close-button { color: #ffffff !important; padding: 4px 8px 0 0; }
+  .leaflet-container a.leaflet-popup-close-button:hover { color: #dddddd !important; }
+  
+  /* Estilos para os ícones personalizados dos marcadores do mapa */
+  .leaflet-div-icon {
+      background: transparent;
+      border: none;
+  }
+  
+  .marker-icon-container {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 16px;
+      border: 3px solid #1A5954;
+      box-shadow: 0 0 12px rgba(0,0,0,0.5);
+      transition: all 0.2s ease-in-out;
+  }
+  .marker-icon-container:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(26, 89, 84, 0.7);
+  }
+  
+  /* Cores dos ícones por categoria de projeto */
+  .marker-icon-reflorestamento { background-color: #10b981; }
+  .marker-icon-educacao       { background-color: #3b82f6; }
+  .marker-icon-monitoramento  { background-color: #8b5cf6; }
+  .marker-icon-protecao       { background-color: #0ea5e9; }
+  .marker-icon-energia        { background-color: #f59e0b; }
+  
+  /* Botões de filtro para o mapa */
+  .map-filter-btn {
+      padding: 0.6rem 1.4rem;
+      border-radius: 9999px;
+      border: 1px solid transparent;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+  }
+  .map-filter-btn:not(.active):hover {
+      background-color: #134A45;
+      border-color: #134A45;
+  }
+  .map-filter-btn.active {
+      background-color: white;
+      color: #1A5954;
+      border-color: white;
+      font-weight: bold;
+  }
+  .map-filter-btn i {
+      margin-right: 0.5rem;
+  }
+  
+  
+  /* ==========================================================================
+     6. ANIMAÇÕES (KEYFRAMES)
+     ========================================================================== */
+  
+  /* Animação para a borda brilhante do .shiny-card */
+  @keyframes rotate {
+      to { --angle: 360deg; }
+  }
+  
+  /* Animação de pulsação para o ano na timeline */
+  @keyframes pulse {
+      0% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.1); }
+      100% { transform: translateX(-50%) scale(1); }
+  }
+  
+  /* Animação de pulsação para o marcador na timeline */
+  @keyframes pulse-marker {
+      0% { transform: translateX(-50%) scale(1); box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.7); }
+      70% { transform: translateX(-50%) scale(1.2); box-shadow: 0 0 0 10px rgba(20, 184, 166, 0); }
+      100% { transform: translateX(-50%) scale(1); box-shadow: 0 0 0 0 rgba(20, 184, 166, 0); }
+  }
+  
+  /* Animação de surgimento para os modais */
+  @keyframes modal-appear {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ==========================================================================
+   7. ESTILOS DO FORMULÁRIO DE CONTATO
+   ========================================================================== */
+
+/* Remove a cor de fundo que o Chrome aplica em campos preenchidos automaticamente */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #1f2937; /* Cor do texto */
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset; /* Cor de fundo branca */
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Oculta o anel de foco padrão do navegador, pois já estamos estilizando com bordas */
+#contact-form input:focus,
+#contact-form select:focus,
+#contact-form textarea:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Ajuste fino para o Rótulo Flutuante do <select> */
+/* Quando o select tem um valor válido (qualquer um exceto a primeira opção vazia), a label sobe */
+#contact-form select:valid + label,
+#contact-form select:focus + label {
+    top: -0.875rem; /* -top-3.5 */
+    font-size: 0.875rem; /* text-sm */
+    color: #0d9488; /* text-teal-600 */
+}
+
+/* Garante que, mesmo com um valor selecionado, a cor da label volte ao cinza quando não estiver em foco */
+#contact-form select:valid:not(:focus) + label {
+    color: #6b7280; /* text-gray-500 */
+}
+
+/* Estilo inicial da label do select quando nenhuma opção foi escolhida */
+#contact-form select:placeholder-shown + label {
+    top: 0.875rem; /* top-3.5 */
+    font-size: 1rem; /* text-base */
+    color: #9ca3af; /* text-gray-400 */
+}
