@@ -7,11 +7,11 @@ from fastapi.middleware.cors import CORSMiddleware
 # Importações para carregar e processar documentos
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from langchain_community.vectorstores import FAISS
-
-# Importação da biblioteca oficial do Google
-import google.generativeai as genai
+from langchain_core.prompts import PromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
 
 # Configuração básica do logging
 logging.basicConfig(level=logging.INFO)
@@ -21,22 +21,29 @@ def criar_banco_de_dados():
     print("Iniciando a criação do banco de dados vetorial...")
     path = "base_conhecimento"
     
-    loader = DirectoryLoader(path, glob="**/*.txt", loader_cls=TextLoader, loader_kwargs={'autodetect_encoding': True})
-    docs = loader.load()
-    print(f"Carregados {len(docs)} documentos.")
+    try:
+        loader = DirectoryLoader(path, glob="**/*.txt", loader_cls=TextLoader, loader_kwargs={'autodetect_encoding': True})
+        docs = loader.load()
+        if not docs:
+            logging.error("Nenhum documento encontrado na pasta 'base_conhecimento'.")
+            return None
+        print(f"Carregados {len(docs)} documentos.")
 
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-    split_docs = text_splitter.split_documents(docs)
-    print(f"Documentos divididos em {len(split_docs)} chunks.")
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+        split_docs = text_splitter.split_documents(docs)
+        print(f"Documentos divididos em {len(split_docs)} chunks.")
 
-    embeddings_model = GoogleGenerativeAIEmbeddings(
-        model="models/embedding-001",
-        google_api_key=os.environ.get("GOOGLE_API_KEY")
-    )
+        embeddings_model = GoogleGenerativeAIEmbeddings(
+            model="models/embedding-001",
+            google_api_key=os.environ.get("GOOGLE_API_KEY")
+        )
 
-    db = FAISS.from_documents(split_docs, embeddings_model)
-    print("Banco de dados vetorial criado com sucesso.")
-    return db
+        db = FAISS.from_documents(split_docs, embeddings_model)
+        print("Banco de dados vetorial criado com sucesso.")
+        return db
+    except Exception as e:
+        logging.error(f"Falha ao criar o banco de dados vetorial: {e}")
+        return None
 
 # --- CÓDIGO PRINCIPAL DA APLICAÇÃO ---
 
@@ -50,69 +57,63 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Carrega a chave de API e configura o cliente do Google
+# Carrega a chave de API
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
-genai.configure(api_key=GOOGLE_API_KEY)
 
 # Constrói o banco de dados vetorial quando a aplicação arranca
 db = criar_banco_de_dados()
 
-# --- ALTERAÇÃO PRINCIPAL AQUI ---
-# Configura o modelo de linguagem com o nome COMPLETO e correto
-llm_geracao = genai.GenerativeModel('models/gemini-pro')
+# --- ALTERAÇÃO PRINCIPAL AQUI: USANDO LANGCHAIN PARA TUDO ---
+llm = ChatGoogleGenerativeAI(model="gemini-pro", google_api_key=GOOGLE_API_KEY, convert_system_message_to_human=True)
 
-# Cria o template do prompt
-prompt_template = """Você é o ClimaBot, um assistente virtual especialista em mudanças climáticas da ONG "Clima Ação". Sua personalidade é didática, confiável e inspiradora, como um educador apaixonado pelo planeta.
+prompt_template_str = """Você é o ClimaBot, um assistente virtual especialista em mudanças climáticas da ONG "Clima Ação". Sua personalidade é didática, confiável e inspiradora.
 
-Sua missão principal é educar os usuários sobre as causas, consequências e fatos científicos do aquecimento global, de forma clara e acessível.
-Sua missão secundária é informar sobre os projetos e as formas de ajudar a ONG "Clima Ação" e, quando apropriado, desmentir mitos comuns sobre o clima.
+Sua missão é educar os usuários sobre o aquecimento global e informar sobre os projetos da ONG "Clima Ação", usando apenas o CONTEXTO abaixo.
 
-REGRAS FUNDAMENTAIS:
-1. CONHECIMENTO LIMITADO: Sua única fonte de verdade são os documentos de contexto fornecidos a cada pergunta. Responda estritamente com base neles.
-2. SEJA HONESTO: Se a resposta para uma pergunta não estiver nos documentos, responda de forma acolhedora, como: "Não encontrei informações sobre isso na minha base de dados. Você gostaria de saber sobre outro tópico relacionado ao nosso trabalho ou às mudanças climáticas?"
-3. TRANSPARÊNCIA GERA CONFIANÇA: Ao fornecer dados ou informações de artigos externos, termine sua resposta de forma natural, mencionando a fonte para que o usuário saiba mais. Por exemplo: "Você pode ler mais sobre isso em [nome da fonte ou link]".
+REGRAS:
+1.  Responda estritamente com base no CONTEXTO fornecido.
+2.  Se a resposta não estiver no CONTEXTO, diga: "Não encontrei informações sobre isso na minha base de dados. Você poderia perguntar sobre o nosso trabalho ou sobre as mudanças climáticas?"
+3.  Se usar dados de uma fonte externa do contexto, cite-a no final. Ex: "Você pode ler mais sobre isso na [nome da fonte]".
 
----
-Pergunta do usuário: {pergunta}
-
-Contexto relevante:
+CONTEXTO:
 {contexto}
----
 
-Resposta:
+PERGUNTA: {pergunta}
+
+RESPOSTA:
 """
+
+prompt = PromptTemplate.from_template(prompt_template_str)
 
 class Pergunta(BaseModel):
     pergunta: str
 
 @app.post("/api")
 def responder(item: Pergunta):
+    if db is None:
+        return {'error': "O banco de dados de conhecimento não está disponível."}
+        
     try:
         pergunta = item.pergunta
         if not pergunta:
             return {'error': 'Pergunta não fornecida'}
 
-        # Faz a busca por similaridade
-        documentos_relevantes = db.similarity_search(pergunta)
-        
-        # Junta o conteúdo dos documentos relevantes
-        contexto = "\n\n".join([doc.page_content for doc in documentos_relevantes])
-        
-        # Formata o prompt final
-        prompt_final = prompt_template.format(pergunta=pergunta, contexto=contexto)
-        
-        # Gera a resposta usando a biblioteca direta do Google
-        resposta = llm_geracao.generate_content(prompt_final)
+        # O retriever busca os documentos relevantes no banco de dados vetorial
+        retriever = db.as_retriever(search_kwargs={"k": 5})
 
-        # Verifica se a resposta tem texto antes de retornar
-        if resposta and hasattr(resposta, 'text'):
-            return {'resposta': resposta.text}
-        else:
-            # Se não houver texto, retorna uma resposta padrão
-            logging.warning("A resposta do modelo de IA estava vazia ou bloqueada.")
-            return {'resposta': 'Desculpe, não consegui gerar uma resposta para isso. Tente perguntar de outra forma.'}
+        # Cria a "chain" (cadeia) de processamento do LangChain
+        rag_chain = (
+            {"contexto": retriever, "pergunta": RunnablePassthrough()}
+            | prompt
+            | llm
+            | StrOutputParser()
+        )
+
+        # Invoca a chain para obter a resposta
+        resposta = rag_chain.invoke(pergunta)
+        
+        return {'resposta': resposta}
         
     except Exception as e:
-        # Adiciona um log para que o erro apareça nos logs do Render
         logging.error(f"Erro ao processar a pergunta: {e}")
         return {'error': f"Erro interno no servidor: {str(e)}"}
