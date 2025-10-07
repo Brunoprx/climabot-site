@@ -1,30 +1,12 @@
-/* ==========================================================================
-   ARQUIVO DE SCRIPTS PRINCIPAIS - CLIMA AÇÃO
-   ==========================================================================
-   
-   ÍNDICE DE CONTEÚDO:
-   1. INICIALIZAÇÃO DE BIBLIOTECAS EXTERNAS (AOS)
-   2. ANIMAÇÕES DA PÁGINA (GSAP)
-   3. LÓGICA DO MENU MOBILE
-   4. LÓGICA DA TIMELINE INTERATIVA (SWIPER)
-   5. LÓGICA DO CONTADOR DE NÚMEROS
-   6. LÓGICA DE ROLAGEM SUAVE (SMOOTH SCROLL)
-   7. EVENT LISTENER PRINCIPAL (WINDOW.LOAD)
-
-========================================================================== */
-
-
-// 1. INICIALIZAÇÃO DA BIBLIOTECA AOS (ANIMATE ON SCROLL)
 // Esta função ativa as animações de "fade" quando os elementos entram na tela.
 function initAOS() {
     AOS.init({
-      duration: 1000, // Duração da animação em milissegundos
-      once: true,     // A animação acontece apenas uma vez
-      offset: 100     // Distância em pixels do final da tela para disparar a animação
+      duration: 1000, 
+      once: true,     
+      offset: 100 
     });
   }
   
-  // 2. ANIMAÇÃO DO TÍTULO PRINCIPAL (HERO) COM GSAP
   // Anima as palavras do título principal para que apareçam uma a uma.
   function animateHeroWords() {
     gsap.to(".word", {
@@ -36,7 +18,6 @@ function initAOS() {
     });
   }
   
-  // 3. LÓGICA DO MENU MOBILE
   // Controla a abertura e o fechamento do menu em telas pequenas.
   function setupMobileMenu() {
     const menuBtn = document.getElementById('menu-btn');
@@ -69,8 +50,6 @@ function initAOS() {
     });
   }
   
-  
-  // 4. LÓGICA DA TIMELINE INTERATIVA (SWIPER)
   const timelineData = [
     { year: "1896", title: "Descoberta do Efeito Estufa", description: "Svante Arrhenius publica a primeira previsão quantitativa do aquecimento global...", image: "img/timeline/Estufa.jpg" },
     { year: "1958", title: "Medições Sistemáticas de CO₂", description: "Charles Keeling inicia medições contínuas de CO₂ no observatório de Mauna Loa...", image: "img/timeline/CO2.jpg" },
@@ -113,7 +92,7 @@ function initAOS() {
   
   // Função que inicializa o Swiper com as configurações desejadas
   function initSwiper() {
-    renderTimelineSlides(); // Primeiro, cria os slides no HTML
+    renderTimelineSlides(); 
   
     new Swiper('.swiper-container', {
       slidesPerView: 'auto',
@@ -144,7 +123,6 @@ function initAOS() {
     });
   }
   
-  // 5. LÓGICA DO CONTADOR DE NÚMEROS
   // Anima os números da seção "Nosso Impacto" para que contem do zero até o valor final.
   function animateCounters() {
     const counters = document.querySelectorAll('.animate-number');
@@ -176,7 +154,6 @@ function initAOS() {
     });
   }
   
-  // 6. LÓGICA DE ROLAGEM SUAVE (SMOOTH SCROLL)
   // Faz com que os cliques em links internos (ex: #contato) rolem a página suavemente.
   function setupSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -193,8 +170,6 @@ function initAOS() {
     });
   }
   
-  
-  // 7. EVENT LISTENER PRINCIPAL (WINDOW.LOAD)
   // Este é o ponto de partida. Ele espera a página inteira carregar (incluindo CSS e imagens)
   // e então chama todas as funções de inicialização na ordem correta.
   window.addEventListener('load', () => {
