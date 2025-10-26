@@ -21,18 +21,18 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-  <link rel="stylesheet" href="chatbot.css">
+  
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
  
 </head>
 
 <body>
   <header class="absolute inset-x-0 top-0 z-50">
-    <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+    <nav class="flex items-center justify-between p-6 xl:px-8" aria-label="Global">
       <div class="flex lg:flex-1">
         <a href="#" class="-m-1.5 p-1.5">
           <span class="sr-only">Clima Ação</span>
@@ -42,7 +42,7 @@
           </div>
         </a>
       </div>
-      <div class="flex lg:hidden">
+      <div class="flex xl:hidden"> 
         <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white" id="menu-btn">
           <span class="sr-only">Abrir menu principal</span>
           <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
@@ -50,7 +50,7 @@
           </svg>
         </button>
       </div>
-      <div class="hidden lg:flex lg:gap-x-12">
+      <div class="hidden xl:flex xl:gap-x-8">
         <a href="#inicio" class="text-sm/6 font-semibold text-white hover:text-gray-200 transition-colors">Início</a>
         <a href="#sobre" class="text-sm/6 font-semibold text-white hover:text-gray-200 transition-colors">Sobre Nós</a>
         <a href="#resultados" class="text-sm/6 font-semibold text-white hover:text-gray-200 transition-colors">Resultados</a>
@@ -60,12 +60,12 @@
         <a href="#como-ajudar" class="text-sm/6 font-semibold text-white hover:text-gray-200 transition-colors">Como Ajudar</a>
         <a href="#contato" class="text-sm/6 font-semibold text-white hover:text-gray-200 transition-colors">Contato</a>
       </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <div class="hidden xl:flex xl:flex-1 xl:justify-end">
         <a href="#como-ajudar" class="text-sm/6 font-semibold text-white bg-teal-500/80 px-4 py-2 rounded-full hover:bg-teal-500/100 transition-colors">Faça uma Doação <span aria-hidden="true">&rarr;</span></a>
       </div>
     </nav>
     
-    <div class="lg:hidden hidden fixed inset-0 z-50 bg-black/50" id="mobile-menu">
+    <div class="xl:hidden hidden fixed inset-0 z-50 bg-black/50" id="mobile-menu"> 
       <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-teal-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
         <div class="flex items-center justify-between">
           <a href="#" class="-m-1.5 p-1.5">
@@ -170,7 +170,11 @@
         </div>
       </div>
     </section>
-
+    <!-- // SVG DIVISÓRIA -->
+    <div class="bg-white"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" class="block w-full h-auto text-gray-100 fill-current">
+      <path d="M1440 100H0V0C480 50 960 50 1440 0V100Z"></path>
+    </svg>
+  </div>
     <!-- TIMELINE DAS MUDANÇAS CLIMÁTICAS -->
     <section id="timeline" class="section py-16 bg-gradient-to-br from-gray-50 to-gray-100 timeline-horizontal-container">
         <div class="container mx-auto px-4">
@@ -433,7 +437,7 @@
               <p class="text-gray-600 mb-4">
                 Descubra tudo sobre a COP 30, que será realizada em novembro de 2025 em Belém
               </p>
-              <a href="https://www.alemdaenergia.engie.com.br/cop30-no-brasil-por-que-e-tao-importante-para-o-futuro-do-clima/?gad_source=1&gad_campaignid=22786113313&gbraid=0AAAAAoJ_EvkfYFDah9I2Y8YXZoFaQsbEP&gclid=Cj0KCQjw5c_FBhDJARIsAIcmHK9BFEwJ0nwMt5Nog3Zg92chZCEVS_WBhn0jY6T2-BdrRvvpD-LELk8aAvD9EALw_wcB" class="text-teal-600 font-semibold hover:text-teal-700">
+              <a href="https://www.alemdaenergia.engie.com.br/cop30-no-brasil-por-que-e-tao-importante-para-o-futuro-do-clima/?gad_source=1&gad_campaignid=22786113313&gbraid=0AAAAAoJ_EvkfYFDah9I2Y8YXZoFaQsbEP&gclid=Cj0KCQjw5c_FBhDJARIsAIcmHK9BFEwJ0nwMt5Nog3Zg92chZCEVS_WBhn0jY6T2-BdrRvvpD-LELk8aAvD9EALw_wcB" target="_blank" rel="noopener noreferrer"class="text-teal-600 font-semibold hover:text-teal-700">
                 Leia mais <i class="fas fa-arrow-right ml-1"></i>
               </a>
             </div>
@@ -452,7 +456,7 @@
               <p class="text-gray-600 mb-4">
                 Nossa última ação ambiental mobilizou 80 voluntários e transformou três praças da cidade...
               </p>
-              <a href="https://g1.globo.com/meio-ambiente/noticia/2025/07/20/novo-estudo-alerta-que-faltam-apenas-3-anos-para-os-piores-impactos-das-mudancas-climaticas-no-mundo.ghtml" class="text-teal-600 font-semibold hover:text-teal-700">
+              <a href="https://g1.globo.com/meio-ambiente/noticia/2025/07/20/novo-estudo-alerta-que-faltam-apenas-3-anos-para-os-piores-impactos-das-mudancas-climaticas-no-mundo.ghtml" target="_blank" rel="noopener noreferrer" class="text-teal-600 font-semibold hover:text-teal-700">
                 Leia mais <i class="fas fa-arrow-right ml-1"></i>
               </a>
             </div>
@@ -471,7 +475,7 @@
               <p class="text-gray-600 mb-4">
                 Área equivalente a duas vezes o Distrito Federal foi consumida pelas chamas; Portugal e Espanha são os países mais afetados.
               </p>
-              <a href="https://veja.abril.com.br/mundo/com-1-milhao-de-hectares-queimados-ue-vive-os-incendios-florestais-mais-graves-da-historia/" class="text-teal-600 font-semibold hover:text-teal-700">
+              <a href="https://veja.abril.com.br/mundo/com-1-milhao-de-hectares-queimados-ue-vive-os-incendios-florestais-mais-graves-da-historia/" target="_blank" rel="noopener noreferrer" class="text-teal-600 font-semibold hover:text-teal-700">
                 Leia mais <i class="fas fa-arrow-right ml-1"></i>
               </a>
             </div>
@@ -479,7 +483,7 @@
         </div>
 
         <div class="text-center mt-12">
-          <a href="https://www.cnnbrasil.com.br/tudo-sobre/mudancas-climaticas/" class="bg-teal-600 text-white px-8 py-3 rounded-lg hover:bg-teal-700 transition-colors">
+          <a href="https://www.cnnbrasil.com.br/tudo-sobre/mudancas-climaticas/" target="_blank" rel="noopener noreferrer" class="bg-teal-600 text-white px-8 py-3 rounded-lg hover:bg-teal-700 transition-colors">
             Ver Todas as Notícias
           </a>
         </div>
@@ -903,7 +907,7 @@
             <a href="#como-ajudar" class="text-gray-200 hover:text-white transition-colors">Apoie</a>
             <a href="#contato" class="text-gray-200 hover:text-white transition-colors">Contato</a>
         </nav>
-        <div class="text-gray-200">
+        <div class="text-gray-200">git config --global core.autocrlf false
           <p>&copy; 2025 Clima Ação. Todos os direitos reservados.</p>
         </div>
       </div>
@@ -915,25 +919,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="js/map.js"></script>
   <script src="js/main.js"></script>
-  
-  <div id="climabot-bubble">
-  <img src="img/logo/climabot-logo.png" alt="Abrir Chat" />
-</div>
-
-<div id="climabot-popup">
-  <div id="climabot-popup-header">
-    <span>ClimaBot Assistente</span>
-    <span class="close-btn">&times;</span>
-  </div>
-  <div id="climabot-messages">
-    <div class="chat-message assistant-message">Olá! Como posso ajudar sobre a Clima Ação ou as mudanças climáticas?</div>
-  </div>
-  <div id="climabot-input-area">
-    <input type="text" id="climabot-input" placeholder="Escreva a sua dúvida...">
-    <button id="climabot-send-btn"><i class="fas fa-paper-plane"></i></button>
-  </div>
-</div>
-<script src="chatbot.js"></script>
 </body>
 
 </html>

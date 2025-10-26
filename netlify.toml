@@ -1,4 +1,0 @@
-[build]
-  command = "echo 'Build command'"
-  publish = "."
-
