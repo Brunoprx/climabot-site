@@ -1,30 +1,3 @@
-/* ==========================================================================
-   ARQUIVO DE ESTILOS GLOBAIS - CLIMA AÇÃO
-   ==========================================================================
-   
-   ÍNDICE DE CONTEÚDO:
-   1. ESTILOS GLOBAIS E UTILITÁRIOS
-   2. CABEÇALHO (HEADER) E NAVEGAÇÃO
-   3. ESTILOS DAS SEÇÕES PRINCIPAIS
-      - Seção: Sobre Nós (#sobre)
-      - Seção: Projetos e Ações (#projetos)
-      - Seção: Depoimentos (#depoimentos)
-   4. COMPONENTES REUTILIZÁVEIS
-      - Componente: Shiny Card (Efeito de Brilho)
-      - Componente: Team Tooltip (Dica de Equipe)
-      - Componente: Bento Grid (Grade de Projetos)
-      - Componente: Timeline Horizontal (Swiper)
-      - Componente: Cards (Timeline, Depoimentos, Resultados, Blog)
-      - Componente: Modais (Janelas Pop-up)
-   5. MAPA INTERATIVO
-   6. ANIMAÇÕES (KEYFRAMES)
-
-========================================================================== */
-
-/* ==========================================================================
-   1. ESTILOS GLOBAIS E UTILITÁRIOS
-   ========================================================================== */
-
 /* Estilo para o vídeo de fundo da seção de início */
 .hero-video-background {
     position: absolute;       /* Posição absoluta em relação à tela */
@@ -47,11 +20,6 @@
   #loading-icon.hidden { 
       display: none; 
   }
-  
-  
-  /* ==========================================================================
-     2. CABEÇALHO (HEADER) E NAVEGAÇÃO
-     ========================================================================== */
   
   /* Estilos de transição para o menu mobile */
   #mobile-menu {
@@ -76,11 +44,6 @@
   #menu-btn:hover {
     transform: scale(1.1);
   }
-  
-  
-  /* ==========================================================================
-     3. ESTILOS DAS SEÇÕES PRINCIPAIS
-     ========================================================================== */
   
   /* Seção: Sobre Nós (#sobre) */
   section#sobre img {
@@ -165,11 +128,6 @@
   #depoimentos .section-title {
       border-bottom-color: rgba(255, 255, 255, 0.8);
   }
-  
-  
-  /* ==========================================================================
-     4. COMPONENTES REUTILIZÁVEIS
-     ========================================================================== */
   
   /* Componente: Shiny Card (Efeito de Brilho na borda ao passar o mouse) */
   @property --angle {
@@ -470,10 +428,6 @@
   .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; position: absolute; right: 15px; top: 10px; cursor: pointer; }
   .close:hover, .close:focus { color: black; }
   
-  
-  /* ==========================================================================
-     5. MAPA INTERATIVO
-     ========================================================================== */
   #impacto-mapa {
       background-color: #1A5954;
       padding-top: 5rem;
@@ -570,11 +524,6 @@
       margin-right: 0.5rem;
   }
   
-  
-  /* ==========================================================================
-     6. ANIMAÇÕES (KEYFRAMES)
-     ========================================================================== */
-  
   /* Animação para a borda brilhante do .shiny-card */
   @keyframes rotate {
       to { --angle: 360deg; }
@@ -599,10 +548,6 @@
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
   }
-
-  /* ==========================================================================
-   7. ESTILOS DO FORMULÁRIO DE CONTATO
-   ========================================================================== */
 
 /* Remove a cor de fundo que o Chrome aplica em campos preenchidos automaticamente */
 input:-webkit-autofill,
