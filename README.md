@@ -51,7 +51,3 @@ No momento, este repositório serve como um portfólio. Contudo, se esta fosse u
 1.  **Doações:** Através do modal de doação na seção "Como Ajudar".
 2.  **Voluntariado:** Inscrevendo-se através do formulário de voluntariado.
 3.  **Sugestões no Código:** Abrindo uma "Issue" (problema) ou enviando um "Pull Request" (sugestão de mudança) neste repositório.
-
----
-
-_README.md criado com a ajuda do Parceiro de Programação._
